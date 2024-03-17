@@ -1,0 +1,23 @@
+version: '3'
+
+services:
+  nginx:
+    image: nginx:latest
+    ports:
+      - "80:80"
+    volumes:
+      - ../chamilo:/var/www/html
+      - ./nginx/default.conf:/etc/nginx/conf.d/default.conf
+  php-fpm:
+    image: chamilo-php
+    build:
+      dockerfile: php/Dockerfile
+    volumes:
+      - ../chamilo:/var/www/html
+  mysql:
+    image: mysql:8.0.36-debian
+    environment:
+      - MYSQL_DATABASE=chamilo
+      - MYSQL_ROOT_PASSWORD=chamilo
+      - MYSQL_USER=chamilo
+      - MYSQL_PASSWORD=chamilo
